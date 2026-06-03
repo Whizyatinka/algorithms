@@ -64,7 +64,7 @@ int main() {
     for (int size : sizes) {
         vector<int> original = generateArray(size);
 
-        // 1. Обычная быстрая сортировка
+        // Обычная быстрая сортировка
         vector<int> arr1 = original;
         auto start = chrono::high_resolution_clock::now();
         quicksort(arr1, 0, size - 1);
@@ -72,7 +72,7 @@ int main() {
         double time_quicksort = chrono::duration<double>(end - start).count();
         times_quicksort.push_back(time_quicksort);
 
-        // 2. Параллельная с 2 потоками
+        // С 2 потоками
         vector<int> arr2 = original;
         start = chrono::high_resolution_clock::now();
         quicksortParallel(arr2, 0, size - 1, 2);
@@ -80,7 +80,7 @@ int main() {
         double time_2t = chrono::duration<double>(end - start).count();
         times_2threads.push_back(time_2t);
 
-        // 3. Параллельная с 4 потоками
+        // С 4 потоками
         vector<int> arr4 = original;
         start = chrono::high_resolution_clock::now();
         quicksortParallel(arr4, 0, size - 1, 4);
@@ -88,7 +88,7 @@ int main() {
         double time_4t = chrono::duration<double>(end - start).count();
         times_4threads.push_back(time_4t);
 
-        // 4. Параллельная с 8 потоками
+        // С 8 потоками
         vector<int> arr8 = original;
         start = chrono::high_resolution_clock::now();
         quicksortParallel(arr8, 0, size - 1, 8);
@@ -96,7 +96,6 @@ int main() {
         double time_8t = chrono::duration<double>(end - start).count();
         times_8threads.push_back(time_8t);
 
-        // Коэффициенты ускорения
         speedup_2.push_back(time_quicksort / time_2t);
         speedup_4.push_back(time_quicksort / time_4t);
         speedup_8.push_back(time_quicksort / time_8t);
