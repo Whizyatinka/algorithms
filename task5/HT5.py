@@ -1,3 +1,4 @@
+import time
 import xml.etree.ElementTree as ET
 import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
@@ -271,12 +272,13 @@ def visualize_only_path(path, figsize=(10, 10)):
 # Пример использования
 
 if __name__ == "__main__":
+    start = time.perf_counter()
     # 1. Загрузка данных
     nodes, edges = read_graphml("Будапешт.graphml")
 
     # 2. Задаём названия улиц для начала и конца маршрута
-    start_street_query = "Csévéző utca"  # Название улицы для старта (пример)
-    end_street_query = "Bartók Béla út"  # Название улицы для финиша (пример)
+    start_street_query = "Kacsóh Pongrác út"  # Название улицы для старта (пример)
+    end_street_query = "Stefánia út"  # Название улицы для финиша (пример)
 
     # 3. Используем find_street_index для определения нужных рёбер
     start_index, start_street = find_street_index(edges, start_street_query)
@@ -293,12 +295,14 @@ if __name__ == "__main__":
         # 5. Строим граф и ищем кратчайший путь
         graph = build_graph(edges)
         path, distance = dijkstra(graph, start_node, end_node)
+        end = time.perf_counter()
 
         if not path:
             print("Путь не найден")
         else:
             print(f"Количество рёбер: {len(edges)}, Количество вершин: {len(nodes)}")
             print(f"Найден путь длиной {distance:.2f} км")
+            print(f"Время исполнения программы {end - start}")
 
             # 6. Визуализация маршрута
             visualize_path_with_network(nodes, edges, path)
